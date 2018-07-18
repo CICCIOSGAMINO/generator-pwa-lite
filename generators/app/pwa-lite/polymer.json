@@ -1,0 +1,27 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/components/<%= pwaNameTag %>.html",
+  "fragments": [
+    "src/components/page-one.js",
+    "src/components/page-two.js",
+    "src/components/page-three.js",
+    "src/components/page-four.js",
+    "src/components/lazy-resources.js",
+    "src/components/pwa-404-warning.js"
+  ],
+  "sources": [
+    "src/**/*",
+    "images/**/*",
+    "package.json"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "node_modules/@webcomponents/*"
+  ],
+  "lint": {
+    "rules": ["polymer-3"] 
+  },
+  "builds": [
+    { "preset": "es6-unbundled" }
+  ]
+}

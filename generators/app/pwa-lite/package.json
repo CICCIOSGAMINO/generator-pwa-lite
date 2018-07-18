@@ -1,0 +1,20 @@
+{
+  "name": "<%= pwaNameTag %>",
+  "version": "1.0.0",
+  "description": "<%= pwaDesc %>",
+  "main": "index.html",
+  "flat": true,
+  "author": "@cicciosgamino",
+  "license": "MIT",
+  "scripts": {
+    "start": "polymer serve"
+  },
+  "dependencies": {
+    "@polymer/lit-element": "0.5.2",
+    "@webcomponents/webcomponentsjs": "^2.0.2",
+    "pwa-helpers": "^0.8.3"
+  },
+  "devDependencies": {
+    
+  }
+}

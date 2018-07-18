@@ -1,0 +1,53 @@
+{
+  "name": "generator-pwa-lite",
+  "version": "0.0.0",
+  "description": "Super lite PWA base structure Yeoman generator.",
+  "homepage": "",
+  "author": {
+    "name": "@cicciosgamino",
+    "email": "marco.canali@gmail.com",
+    "url": "https://github.com/CICCIOSGAMINO"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "PWA",
+    "lit-html",
+    "ES6",
+    "yeoman-generator"
+  ],
+  "devDependencies": {
+    "yeoman-test": "^1.6.0",
+    "yeoman-assert": "^3.0.0",
+    "nsp": "^2.6.3",
+    "eslint": "^4.1.0",
+    "eslint-config-xo-space": "^0.16.0",
+    "jest": "^19.0.2",
+    "jest-cli": "^20.0.0"
+  },
+  "dependencies": {
+    "yeoman-generator": "^1.0.0",
+    "chalk": "^1.1.3",
+    "yosay": "^2.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "lint": "eslint . --fix",
+    "prepublish": "nsp check",
+    "pretest": "eslint . --fix",
+    "test": "jest"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "jest": true,
+      "node": true
+    }
+  },
+  "repository": "CICCIOSGAMINO/generator-pwa-lite",
+  "license": "MIT"
+}
