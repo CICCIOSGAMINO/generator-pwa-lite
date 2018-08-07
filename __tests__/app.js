@@ -20,7 +20,8 @@ describe('generator-pwa-lite:pwa', () => {
       'service-worker.js',
       'wct.conf.json',
       'src/store.js',
-      'src/components/pwa-lite.js'
+      'src/components/pwa-lite.js',
+      'src/components/pwa-icons.js'
     ]);
   });
 });

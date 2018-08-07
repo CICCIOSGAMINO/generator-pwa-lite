@@ -144,12 +144,12 @@ module.exports = class extends Generator {
       this.props
     );
 
-    // Copy all files in the folder but not files starting with _
     this.fs.copyTpl(
-      `${this.templatePath()}/src/!(_)*`,
+      `${this.templatePath()}/src/**/!(_)*`,
       `${this.destinationPath()}/src/`,
       this.props
     );
+
   }
 
   install() {
