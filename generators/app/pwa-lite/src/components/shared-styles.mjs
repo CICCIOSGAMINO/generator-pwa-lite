@@ -9,19 +9,12 @@ import { html } from '@polymer/lit-element';
 export const SharedStyles = html`
 
   <style>
-    /** Main */ 
-    --app-primary-color: <%= themeColor %>;
-    --app-secondary-color: <%= secondaryColor %>;
-    --app-accent-color: <%= accentColor %>;
-
-    /** Header */ 
-    --app-header-background-color: var(--app-primary-color);
-    --app-header-text-color: pink;
-
-    --paper-button-ink-color: var(--app-accent-color);
-    --paper-icon-button-ink-color: var(--app-accent-color);
-    --paper-spinner-color: var(--app-accent-color);
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    .red-square {
+      width: 250px;
+      height: 250px;
+      background-color: red;
+      border: none;
+    }
     
   </style>
 

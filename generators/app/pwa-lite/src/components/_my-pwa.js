@@ -5,11 +5,21 @@
 */
 
 import { LitElement, html } from '@polymer/lit-element';
+import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
+
+// Redux - this element is connected to the store.
+import { store } from '../store.js';
+
+// Redux - these are the actions needed by this element.
+import {
+  updateDrawerState,
+  updateOffline
+} from '../actions/app.js';
 
 // Elements needed
 import '@polymer/app-layout/app-drawer/app-drawer.js';
@@ -20,18 +30,48 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import { SharedStyles } from './shared-styles.mjs';
 import { menuIcon } from './pwa-icons.mjs';
 
-class <%= className %> extends LitElement {
+import './snack-bar.js';
+
+class <%= className %> extends connect(store)(LitElement) {
   _render({pwaTitle, _page, _drawerOpened, _snackbarOpened, _offline}) {
     return html`
       <style>
 
       :host {
         display: block;
-        ${ SharedStyles }
 
+        /** Main */ 
+        --app-primary-color: <%= themeColor %>;
+        --app-secondary-color: <%= secondaryColor %>;
+        --app-accent-color: <%= accentColor %>;
+
+        /** --app-primary-color: #E91E63;
+        --app-secondary-color: #293237; **/ 
+        --app-dark-text-color: var(--app-secondary-color);
+        --app-light-text-color: white;
+        --app-section-even-color: #f7f7f7;
+        --app-section-odd-color: white;
+
+        /** Header */ 
+        --app-header-background-color: white;
+        --app-header-text-color: var(--app-dark-text-color);
+        --app-header-selected-color: var(--app-primary-color);
+
+        --paper-button-ink-color: var(--app-accent-color);
+        --paper-icon-button-ink-color: var(--app-accent-color);
+        --paper-spinner-color: var(--app-accent-color);
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+        /** Box */
+        --app-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        /** Drawer */
+        --app-drawer-width: 256px;
         --app-drawer-background-color: var(--app-secondary-color);
         --app-drawer-text-color: var(--app-light-text-color);
         --app-drawer-selected-color: #78909C;
+
+        ${ SharedStyles }
       }
 
       app-header {
@@ -153,7 +193,7 @@ class <%= className %> extends LitElement {
     <!-- Header -->
     <app-header condenses reveals effects="waterfall">
       <app-toolbar class="toolbar-top">
-        <button class="menu-btn" title="Menu">${menuIcon}</button>
+        <button class="menu-btn" title="Menu" on-click="${_ => store.dispatch(updateDrawerState(true))}">${menuIcon}</button>
         <div main-title>${pwaTitle}</div>
       </app-toolbar>
 
@@ -168,10 +208,10 @@ class <%= className %> extends LitElement {
     <!-- Drawer content -->
     <app-drawer opened="${_drawerOpened}"
         on-opened-changed="${e => store.dispatch(updateDrawerState(e.target.opened))}">
-      <nav class="drawer-list">
-        <a selected?="${_page === 'view1'}" href="/view1">View One</a>
-        <a selected?="${_page === 'view2'}" href="/view2">View Two</a>
-        <a selected?="${_page === 'view3'}" href="/view3">View Three</a>
+        <nav class="drawer-list">
+        <a selected?="${_page === 'view1'}" >View One</a>
+        <a selected?="${_page === 'view2'}" >View Two</a>
+        <a selected?="${_page === 'view3'}" >View Three</a>
       </nav>
     </app-drawer>
 
@@ -188,7 +228,9 @@ class <%= className %> extends LitElement {
     </footer>
     
     <snack-bar active?="${_snackbarOpened}">
-        You are now ${_offline ? 'offline' : 'online'}.</snack-bar>`;
+        You are now ${_offline ? 'OFFLINE' : 'ONLINE'}
+    </snack-bar>
+    `;
   }
 
   static get properties() {
@@ -203,11 +245,13 @@ class <%= className %> extends LitElement {
 
   constructor() {
     super();
-    this.pwaTitle = 'PWA TITLE';
-    this._page = "Page";
-    this._offline = true;
-    this._snackbarOpened = true;
-    this._drawerOpened = true;
+    // To force all event listeners for gestures to be passive.
+    // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
+    setPassiveTouchGestures(true);
+  }
+
+  _firstRendered() {
+    installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
   }
 
   ready() {
@@ -218,8 +262,14 @@ class <%= className %> extends LitElement {
     console.log('READY >>> ')
   }
 
-}
+  _stateChanged(state) {
+    /**this._page = state.app.page; **/ 
+    this._offline = state.app.offline;
+    this._snackbarOpened = state.app.snackbarOpened; 
+    this._drawerOpened = state.app.drawerOpened;
+  }
 
+}
 
 // Register custom element definition using standard platform API
 customElements.define('<%= pwaNameTag %>', <%= className %>);
