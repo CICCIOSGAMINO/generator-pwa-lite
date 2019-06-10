@@ -1,46 +1,55 @@
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html, css } from 'lit-element';
+import { SharedStyles } from './shared-styles.mjs';
 
 class SnackBar extends LitElement {
-  _render(props) {
-    return html`
-      <style>
+  
+  static get properties() {
+    return {
+      active: { type: Boolean }
+    }
+  }
 
+  static get styles() {
+    return [
+      css`
         :host {
           display: block;
           position: fixed;
-          bottom: 0;
+          top: 100%;
           left: 0;
           right: 0;
           padding: 12px;
           background-color: var(--app-secondary-color);
-          color: var(--app-primary-text-color);
-          box-shadow: var(--app-box-shadow);
+          color: var(--app-light-text-color);
+          box-shadow: 0 0 10px rgba(0,0,0,0.2);
           text-align: center;
           will-change: transform;
-          transform: translate3d(0, 100%, 0);
+          transform: translate3d(0,0,0);
           transition-property: visibility, transform;
           transition-duration: 0.2s;
           visibility: hidden;
         }
 
-        :host[active] {
+        :host([active]) {
           visibility: visible;
-          transform: translate3d(0, 0, 0);
+          transform: translate3d(0, -100%, 0);
         }
 
         @media (min-width: 460px) {
-        :host {
-          width: 320px;
-          margin: auto;
+          :host {
+            width: 320px;
+            margin: auto;
+          }
         }
-
-      </style>
-      <slot></slot>`;
+      `
+    ];
   }
 
-  static get properties() { return {
-    active: Boolean
-  }};
+  render() {
+    return html`
+      <slot></slot>
+    `;
+  }
 
 }
 

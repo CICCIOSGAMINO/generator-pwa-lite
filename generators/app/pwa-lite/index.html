@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pwa-lite(@cicciosgamino)">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
     <title><%= pwaName %></title>
     <meta name="description" content="<%= pwaDesc %>">
@@ -11,7 +11,7 @@
     <!-- Use relative path with base and rootPath --> 
     <base href="/">
 
-    <!-- <link rel="icon" href="images/favicon.ico"> --> 
+    <link rel="icon" href="images/favicon.ico">
     <link id="favicon" rel="shortcut icon" href="images/favicon/favicon-16.png" sizes="16x16">
     <link id="favicon" rel="shortcut icon" href="images/favicon/favicon-32.png" sizes="32x32">
     <link id="favicon" rel="shortcut icon" href="images/favicon/favicon-64.png" sizes="64x64">
@@ -35,7 +35,7 @@
     <meta name="apple-mobile-web-app-title" content="<%= pwaName  %>">
 
     <!-- Preload the Logo SVG -->
-    <link rel="preload" as="image" href="../images/pwa.svg">
+    <link rel="preload" as="image" href="images/pwa.svg">
 
     <!-- Homescreen icons -->
     <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
@@ -50,21 +50,19 @@
     <meta name="msapplication-TileColor" content="<%= themeColor %>">
     <meta name="msapplication-tap-highlight" content="no">
 
-    <!-- multiple icons for IE -->
-    <meta name="msapplication-square70x70logo" content="icon70x70.png">
-    <meta name="msapplication-square150x150logo" content="icon150x150.png">
-    <meta name="msapplication-square310x310logo" content="icon310x310.png">
-
     <!-- Twitter --> 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@cicciosgamino">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="pwa-lite">
+    <meta property="og:site_name" content="<%= pwaName %>">
     <meta property="og:image" content="images/manifest/icon-144x144.png" />
 
     <!-- Facebook OpenGraph --> 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="<%= pwaName  %>">
+
+    <!-- PT (Performance Tip) Hint to the browser to start the handshake for fonts site -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 
     <!-- Load and register pre-caching Service Worker -->
     <script>
@@ -85,14 +83,25 @@
 
     <!-- Add any global styles for body, document, etc. -->
     <style>
+      @font-face {
+        font-family: 'Pacifico';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/Q_Z9mv4hySLTMoMjnk_rCXYhjbSpvc47ee6xR_80Hnw.woff2) format('woff2');
+        /* The browser draws the text immediately in the fallback font if the font
+           isn't loaded, then swaps it with the webfont when it eventually loads
+           See: https://developers.google.com/web/updates/2016/02/font-display
+        */
+        font-display: swap;
+      }
       body {
         margin: 0;
-        font-family: Helvetica,Arial,sans-serif;
-        font-size: 14px;
+        /* This is a font-stack that tries to use the system-default sans-serifs first */
+        font-family: Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
         min-height: 100vh;
-        background: linear-gradient(to bottom right, <%= themeColor %>, #78909C);
+        -webkit-font-smoothing: antialiased;
+        background: linear-gradient(to bottom right, <%= themeColor %>, #78909C); 
       }
 
       /* styling for rendering while resources are loading  TEXT-VERSION
@@ -141,7 +150,9 @@
         `font-size: 22px; color: <%= themeColor %>`,
         `font-size: 16px; color: rgb(40, 51, 76);`
       );
-    })
+
+      document.querySelector('pwa-lite').removeAttribute('unresolved');
+    });
   </script>
 
 </body>

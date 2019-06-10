@@ -1,38 +1,39 @@
-PWA Lite
+pwa-lite
 ========
 [TOC]
 
-Performant PWA Lite, simple Yeoman generator for a bare basic ultra lite PWA structure. PWA 
-means WebComponents, Service Workers, ES6 Modules, Static/Dynamic Imports. 
+Yeoman generator to boost a basic PWA as Single Page Application, builfd on lit-html, workbox, material design. We're trying 
+to update the project with latest features!
 
-## Menu Items
-The Menu items and the page to route connected to the Menu items are define in the file 
-**menu-items.js**. Here you can define your own menu items, tabs name to route in your 
-web content, keep in mind to rename the default : 
+## Yeoman 
+Yeoman is the PWA scaffolding tool, so let's boostrap the PWA: 
 
-+ home 
-+ one
-+ two
-+ three
-+ four
+```bash
+# with node.js, npm installed install yeoman 
+npm install --global yo
+# install the generator-pwa-lite 
+npm install --global generator-pwa-lite
 
-in the **menu-items.js** file according with the name of the pages defines, page home is not 
-lazy loaded but is defined and loaded in the main application file! For other page files follow
-name rule : 
+# in the project folder build the PWA project 
+yo pwa-lite
+```
 
-+ one (name)  >  page-one.js
-+ two (name)  >  page-two.js
-+ three (name)  >  page-three.js
-+ four (name)  >  page-four.js
-...
-
-Only the home page (app-home.js) is defined and loaded with the main application element, 
-the other pages are lazy loaded. 
+## Directory Structure
 
 
-## ServiceWorker
+## Pages
+In the pwa-lite are pre-builded the page: 
 
-## images
++ page-home
++ page-view1
++ page-view2 
++ page-view3
++ page-view404
+
+
+## ServiceWorker (TODO)
+
+## Images (TODO)
 Check in the /images folder to get more details.
 
 ## .gitignore
